@@ -257,49 +257,68 @@ export class RegisterComponent implements OnInit {
     if (this.f['fname'].invalid) {
       alert('Please insert the Name');
       (<HTMLInputElement>document.getElementById("fname")).focus();
+      return;
     }
-    else if (this.f['fic'].invalid) {
+
+    if (this.f['fic'].invalid) {
       alert('Please insert  I/C No.');
       (<HTMLInputElement>document.getElementById("fic")).focus();
+      return;
     }
-    else if (this.f['femail'].invalid) {
+
+    if (this.f['femail'].invalid) {
       alert('Please insert the Email');
       (<HTMLInputElement>document.getElementById("femail")).focus();
+      return;
     }
-    else if (this.f['fdob'].invalid) {
+
+    if (this.f['fdob'].invalid) {
       alert('Please insert the DOB');
       (<HTMLInputElement>document.getElementById("fdob")).focus();
+      return;
     }
-    else if (this.f['fhptel'].invalid) {
+
+    if (this.f['fhptel'].invalid) {
       alert('Please insert the Phone (Mobile)');
       (<HTMLInputElement>document.getElementById("fhptel")).focus();
+      return;
     }
-    else if (this.f['fsex'].invalid) {
+
+    if (this.f['fsex'].invalid) {
       alert('Please select the DOB');
       (<HTMLInputElement>document.getElementById("fsex")).focus();
+      return;
     }
-    else if (this.f['faddr1'].invalid) {
+
+    if (this.f['faddr1'].invalid) {
       alert('Please insert the Address');
       (<HTMLInputElement>document.getElementById("faddr1")).focus();
+      return;
     }
-    else if (this.f['fstate'].value == "Please Select") {
+
+    if (this.f['fstate'].value == "Please Select") {
       alert('Please select the State');
       (<HTMLInputElement>document.getElementById("fstate")).focus();
+      return;
     }
-    else if (this.f['fcity'].value == "Please Select") {
+
+    if (this.f['fcity'].value == "Please Select") {
       alert('Please select the City');
       (<HTMLInputElement>document.getElementById("fcity")).focus();
+      return;
     }
-    else if (this.f['fpostcode'].value == "Please Select") {
+
+    if (this.f['fpostcode'].value == "Please Select") {
       alert('Please select the Postcode');
       (<HTMLInputElement>document.getElementById("fpostcode")).focus();
+      return;
     }
-    else {
 
-      console.log('Your form data : ', this.regForm.value);
 
-      alert("Success");
-    }
+    console.log('Form data : ', this.regForm.value);
+
+    alert("Success");
+
     return;
   }
 
@@ -345,7 +364,7 @@ export function createDateValidator(): ValidatorFn {
 
     var dateValid = false;
 
-    if (ValidYear > checkYear || 1930 > checkYear) {
+    if (ValidYear >= checkYear || 1930 > checkYear) {
       // console.log("Valid");
       dateValid = true;
     }
