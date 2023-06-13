@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+@import "@coreui/coreui/scss/coreui";
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+#grad1 {
+    height: 200px;
+
+    /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right,#36d8f5 , #1947d3);
+}

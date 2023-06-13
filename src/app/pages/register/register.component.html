@@ -1,0 +1,244 @@
+<div class="d-flex justify-content-center">
+  <div class="col-sm-10 ">
+    <div class="card">
+      <div class="card-header">
+        <strong>Register Form</strong>
+      </div>
+      <div class="card-body">
+        <form #customStylesForm="ngForm" [validated]="customStylesValidated" [formGroup]="regForm" novalidate cForm cRow
+          (ngSubmit)="onSubmit()" class="needs-validation">
+          <div style="padding-top: 1%;"></div>
+          <div class="form-group row">
+            <label for="fusername" class="col-md-2 col-form-label-sm col-sm-2" aria-required="true">Username<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <c-input-group class="mb-3" sizing="sm">
+                <span cInputGroupText>@</span>
+                <input cFormControl type="text" id="fusername" formControlName="fusername" sizing="sm"
+                  placeholder="Abc123" minlength="4" maxlength="30" required
+                  oninput="this.value = this.value.replace(/[^a-z0-9]/gi, '');">
+              </c-input-group>
+              <div class="error" *ngIf="username.invalid && (f['fusername'].dirty || f['fusername'].touched)">
+                <small *ngIf="f['fusername'].errors?.['required']">
+                  Username is required.
+                </small>
+                <small *ngIf="f['fusername'].errors?.['minlength']">
+                  Username must be at least 4 characters long.
+                </small>
+              </div>
+            </div>
+            <label for="fpassword" class="col-md-2 col-form-label-sm text-wrap">Password<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <input type="password" id="fpassword" formControlName="fpassword" minlength="8" maxlength="20" sizing="sm"
+                cFormControl required placeholder="Must be 8-20 characters long." passwordStrength>
+              <div class="error" *ngIf="f['fpassword'].invalid && (f['fpassword'].dirty || f['fpassword'].touched)">
+                <small *ngIf="f['fpassword'].errors?.['required']">
+                  *Password is required.
+                </small>
+                <small *ngIf="f['fpassword'].errors?.['passwordStrength'] ">
+                  *Password must be alphanumeric characters (exp:W3lc0Me). <BR>
+                </small>
+                <small *ngIf="f['fpassword'].errors?.['minlength'] || f['fpassword'].errors?.['maxlength']">
+                  *Password must be 8-20 characters long.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="fname" class="col-md-2 col-form-label-sm col-sm-2" aria-required="true">Full Name<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <input cFormControl type="text" id="fname" formControlName="fname" sizing="sm" minlength="4"
+                maxlength="50" required
+                oninput="this.value = this.value.replace(/[^a-z0-9\s]/gi, '');this.value = this.value.toUpperCase();">
+              <div class="error" *ngIf="f['fname'].invalid && (f['fname'].dirty || f['fname'].touched)">
+                <small *ngIf="f['fname'].errors?.['required']">
+                  Name is required.
+                </small>
+                <small *ngIf="f['fname'].errors?.['minlength']">
+                  Name must be at least 4 characters long.
+                </small>
+              </div>
+            </div>
+            <label for="fic" class="col-md-2 col-form-label-sm" sizing="sm">New IC No<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <input type="text" id="fic" formControlName="fic" class="form-control form-control-sm" sizing="sm"
+                (keyup)="ValidateICNo($event)" (blur)="ValidateICNo($event)" maxlength="12" minlength="1"
+                placeholder="without dash(-)" required>
+              <div class="error" *ngIf="f['fic'].invalid && (f['fic'].dirty || f['fic'].touched)">
+                <small *ngIf="f['fic'].errors?.['required']">
+                  Ic No is required.
+                </small>
+                <small *ngIf="f['fic'].errors?.['minlength']">
+                  Ic No is Invalid.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="femail" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">Email<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <input type="email" id="femail" formControlName="femail" class="form-control form-control-sm" sizing="sm"
+                oninput="this.value = this.value.toLowerCase()" maxlength="80" emailStrength required
+                (blur)="ValidateEmail($event)">
+              <div class="error" *ngIf="f['femail'].invalid && (f['femail'].dirty || f['femail'].touched)">
+                <small *ngIf="f['femail'].errors?.['required']">
+                  Email is required.
+                </small>
+                <small *ngIf="f['femail'].errors?.['emailStrength']">
+                  Email is Invalid.
+                </small>
+              </div>
+            </div>
+            <label for="fdob" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">DOB<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <input id="fdob" type="date" formControlName="fdob" placeholder="date"
+                class="form-control form-control-sm" sizing="sm" required max="{{maxDate}}" min="{{minDate}}"
+                (blur)="checkDate($event)" dateStrength>
+              <div class="error" *ngIf="f['fdob'].invalid && (f['fdob'].dirty || f['fdob'].touched)">
+                <small *ngIf="f['fdob'].errors?.['required']">
+                  DOB is required.
+                </small>
+                <small *ngIf="f['fdob'].errors?.['dateStrength']">
+                  DOB must be 18 years old above.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="fhptel" class="col-md-2 col-form-label-sm" sizing="sm">Phone Number<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <c-input-group class="mb-3" sizing="sm">
+                <span cInputGroupText>{{fcountryDial}}</span>
+                <input type="tel" id="fhptel" minlength="10" maxlength="11" formControlName="fhptel" cFormControl
+                  (blur)="ValidatePhoneNo($event)"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*?)\..*/g, '$1');" required
+                  phoneStrength />
+              </c-input-group>
+              <div class="error" *ngIf="f['fhptel'].invalid && (f['fhptel'].dirty || f['fhptel'].touched)">
+                <small *ngIf="f['fhptel'].errors?.['required']">
+                  Phone Number is required.
+                </small>
+                <small *ngIf="f['fhptel'].errors?.['minlength'] || f['fhptel'].errors?.['phoneStrength']">
+                  Phone Number is Invalid.
+                </small>
+              </div>
+            </div>
+            <label for="fsex" class="col-md-2 col-form-label-sm" sizing="sm">Sex<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <select id="fsex" formControlName="fsex" class="form-control form-control-sm" required>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+                <option value="O">Others</option>
+              </select>
+              <div class="error" *ngIf="f['fsex'].invalid && (f['fsex'].dirty || f['fsex'].touched)">
+                <small *ngIf="f['fsex'].errors?.['required']">
+                  Sex is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="faddr1" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">Address<span
+                style="color: red;">*</span></label>
+            <div class="col-md">
+              <input type="text" id="faddr1" formControlName="faddr1" class="form-control form-control-sm" sizing="sm"
+                oninput="this.value = this.value.toUpperCase()" placeholder="A-123-45 Main...." minlength="10"
+                maxlength="80" required>
+              <div class="error" *ngIf="f['faddr1'].invalid && (f['faddr1'].dirty || f['faddr1'].touched)">
+                <small *ngIf="f['faddr1'].errors?.['required']">
+                  Address is required.
+                </small>
+                <small *ngIf="f['faddr1'].errors?.['minlength']">
+                  Address must be at least 10 characters long.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="faddr2" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">Address 2</label>
+            <div class="col-md">
+              <input type="text" id="faddr2" formControlName="faddr2" class="form-control form-control-sm" sizing="sm"
+                oninput="this.value = this.value.toUpperCase()" placeholder="Apartment, studio, or floor" minlength="4"
+                maxlength="80">
+              <div class="error" *ngIf="f['faddr2'].invalid && (f['faddr2'].dirty || f['faddr2'].touched)">
+                <small *ngIf="f['faddr2'].errors?.['minlength']">
+                  Address must be at least 4 characters long.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="fstate" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">State<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <select cFormControl id="fstate" formControlName="fstate" sizing="sm" class="form-control form-control-sm"
+                (change)="checkState($event)" required>
+                <option disabled hidden [value]="">Please Select</option>
+                <option *ngFor="let state of states; let i = index" value="{{state.abbreviation.trim()}}">
+                  {{state.name.toUpperCase()}}</option>
+              </select>
+              <div class="error" *ngIf="f['fstate'].invalid && (f['fstate'].dirty || f['fstate'].touched)">
+                <small *ngIf="f['fstate'].errors?.['required']">
+                  State is required.
+                </small>
+              </div>
+            </div>
+
+            <label for="fcity" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">City<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <select cFormControl id="fcity" formControlName="fcity" sizing="sm" class="form-control form-control-sm"
+                (change)="checkCity($event)" required>
+                <option disabled hidden [value]="">Please Select</option>
+                <option *ngFor="let city of cities; let i = index" value="{{city.name.trim()}}">
+                  {{city.name.toUpperCase()}}</option>
+              </select>
+              <div class="error" *ngIf="f['fcity'].invalid && (f['fcity'].dirty || f['fcity'].touched)">
+                <small *ngIf="f['fcity'].errors?.['required']">
+                  City is required.
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="fpostcode" class="col-md-2 col-form-label-sm" aria-required="true" sizing="sm">Postcode<span
+                style="color: red;">*</span></label>
+            <div class="col-md-4">
+              <select cFormControl id="fpostcode" formControlName="fpostcode" sizing="sm"
+                class="form-control form-control-sm" required>
+                <option disabled hidden [value]="">Please Select</option>
+                <option *ngFor="let postcode of postcode; let i = index" value="{{postcode.trim()}}">
+                  {{postcode.toUpperCase()}}</option>
+              </select>
+              <div class="error" *ngIf="f['fpostcode'].invalid && (f['fpostcode'].dirty || f['fpostcode'].touched)">
+                <small *ngIf="f['fpostcode'].errors?.['required']">
+                  Postcode is required.
+                </small>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div>
+            <button variant="outline" class="me-1 btn btn-info" style="color: white;" type="submit">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
